@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pimdeed</title>
   <link rel="stylesheet" href="/style.css"/>
+  <script src="/js/alpine.js"></script>
 </head>
 <body>
   <div class="fixed inset-0 flex justify-center items-center">
     <div>
       <span class="text-change">Good design</span><br/>
       <span class="change">is<br/>as little design<br/>as possible</span>
+      <br/>
+      <span x-data="{message:'🤖 AlpineJS : Hello World! 🤓'}" x-text="message">
+        If you see this, AlpineJS is not working yet! 🙁
+      </span>
     </div>
   </div>
 </body>
