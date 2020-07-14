@@ -15,11 +15,15 @@
       <input x-model="template" disabled class="w-full my-2 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" type="text" name="text" id="text" />
       <input x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
       <template x-if="isFinished()">
-        <p>
+        <p class="my-2 text-center">
           You've done typing! Time: <span x-text="typingTime()"></span>
+        </p>
+        <p class="my-2 text-center">
           <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Retry</a>
         </p>
       </template>
+      <a class="mt-6 text-gray-400" href="https://github.com/narze/pimdeed">Github</a>
+      <a class="float-right text-gray-400" href="https://100daysofcode.narze.vercel.app">#100DaysOfCode</a>
     </div>
   </div>
 
