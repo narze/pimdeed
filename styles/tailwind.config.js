@@ -1,7 +1,9 @@
 module.exports = {
   theme: {
-    colors: {
-      change: "teal"
+    extend: {
+      colors: {
+        change: "teal"
+      },
     }
   },
   variants: {},

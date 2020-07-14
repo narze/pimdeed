@@ -8,15 +8,43 @@
   <script src="/js/alpine.js"></script>
 </head>
 <body>
-  <div class="fixed inset-0 flex justify-center items-center">
+  <div id="app" x-data="app()" class="fixed inset-0 flex justify-center items-center">
     <div>
-      <span class="text-change">Good design</span><br/>
-      <span class="change">is<br/>as little design<br/>as possible</span>
-      <br/>
-      <span x-data="{message:'🤖 AlpineJS : Hello World! 🤓'}" x-text="message">
-        If you see this, AlpineJS is not working yet! 🙁
-      </span>
+      <h1 class="text-3xl text-center">Pimdeed</h1>
+      <p class="text-center text-gray-600">Typing Practice</p>
+      <input x-model="template" disabled class="w-full my-2 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" type="text" name="text" id="text" />
+      <input x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
+      <template x-if="isFinished()">
+        <p>
+          You've done typing! Time: <span x-text="typingTime()"></span>
+          <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Retry</a>
+        </p>
+      </template>
     </div>
   </div>
+
+  <script type="text/javascript">
+    function app() {
+      return {
+        template: 'the quick brown fox jumps over the lazy dog',
+        input: null,
+        started: false,
+        startTime: null,
+        finishTime: null,
+        isFinished() {
+          return this.template == this.input
+        },
+        type() {
+          if (!this.started) {
+            this.started = true
+            this.startTime = Date.now()
+          }
+        },
+        typingTime() {
+          return `${(Date.now() - this.startTime) / 1000}s`
+        }
+      }
+    }
+  </script>
 </body>
 </html>
