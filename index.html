@@ -8,19 +8,22 @@
   <script src="/js/alpine.js"></script>
 </head>
 <body>
-  <div id="app" x-data="app()" class="fixed inset-0 flex justify-center items-center">
+  <div id="app" x-init="$refs.startButton.focus()" x-data="app()" class="fixed inset-0 flex justify-center items-center">
     <div>
       <h1 class="text-3xl text-center">Pimdeed</h1>
       <p class="text-center text-gray-600">Typing Practice</p>
       <input x-model="template" disabled class="w-full my-2 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" type="text" name="text" id="text" />
-      <input x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
+      <input x-ref="typingInput" x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
+      <div class="text-center">
+        <button x-text="isFinished() ? 'Restart' : 'Start'" x-ref="startButton" x-on:keydown.enter="start()" @click="start()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </button>
+      </div>
       <template x-if="isFinished()">
-        <p class="my-2 text-center">
-          You've done typing! Time: <span x-text="typingTime()"></span>
-        </p>
-        <p class="my-2 text-center">
-          <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Retry</a>
-        </p>
+        <div>
+          <p class="my-2 text-center">
+            You've done typing! Time: <span x-text="typingTime()"></span>
+          </p>
+        </div>
       </template>
       <a class="mt-6 text-gray-400" href="https://github.com/narze/pimdeed">Github</a>
       <a class="float-right text-gray-400" href="https://100daysofcode.narze.vercel.app">#100DaysOfCode</a>
@@ -35,8 +38,18 @@
         started: false,
         startTime: null,
         finishTime: null,
+        start() {
+          this.input = ""
+          console.log(this.$refs.typingInput)
+          this.$refs.typingInput.focus()
+        },
         isFinished() {
-          return this.template == this.input
+          const finished = this.template == this.input
+          if (finished) {
+            this.started = false
+            this.$refs.startButton.focus()
+          }
+          return finished
         },
         type() {
           if (!this.started) {
