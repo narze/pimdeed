@@ -15,6 +15,7 @@
       <input x-model="template" disabled class="w-full my-2 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" type="text" name="text" id="text" />
       <input x-ref="typingInput" x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
       <div class="text-center">
+        <template x-if="!started"></template><p>Press <code>Enter</code> and start typing!</p>
         <button x-text="startButtonText()" x-ref="startButton" @click="start()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         </button>
       </div>
