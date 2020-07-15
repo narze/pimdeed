@@ -15,13 +15,20 @@
       <input x-model="template" disabled class="w-full my-2 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" type="text" name="text" id="text" />
       <input x-ref="typingInput" x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
       <div class="text-center">
-        <button x-text="isFinished() ? 'Restart' : 'Start'" x-ref="startButton" x-on:keydown.enter="start()" @click="start()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button x-text="startButtonText()" x-ref="startButton" @click="start()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         </button>
       </div>
       <template x-if="isFinished()">
         <div>
           <p class="my-2 text-center">
             You've done typing! Time: <span x-text="typingTime()"></span>
+          </p>
+        </div>
+      </template>
+      <template x-if="started">
+        <div>
+          <p class="my-2 text-center">
+            <span x-text="elapsedTime"></span>
           </p>
         </div>
       </template>
@@ -38,14 +45,21 @@
         started: false,
         startTime: null,
         finishTime: null,
+        interval: null,
         start() {
           this.input = ""
-          console.log(this.$refs.typingInput)
           this.$refs.typingInput.focus()
+
+          clearInterval(this.interval)
+          const self = this
+          this.interval = setInterval(() => {
+            self.elapsedTime = self.typingTime()
+          }, 10);
         },
         isFinished() {
           const finished = this.template == this.input
           if (finished) {
+            clearInterval(this.interval)
             this.started = false
             this.$refs.startButton.focus()
           }
@@ -59,7 +73,10 @@
         },
         typingTime() {
           return `${(Date.now() - this.startTime) / 1000}s`
-        }
+        },
+        startButtonText() {
+          return this.isFinished() ? 'Restart' : 'Start'
+        },
       }
     }
   </script>
