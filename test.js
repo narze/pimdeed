@@ -1,10 +1,11 @@
 const test = require('ava');
+const { render } = require('alpine-test-utils');
 
-test('foo', t => {
-  t.pass();
-});
+test('test foo component', (t) => {
+  const componentHtml = `<div x-data="{foo: 'bar'}">
+    <span x-text="foo"></span>
+  </div>`
+  const component = render(componentHtml);
 
-test('bar', async t => {
-  const bar = Promise.resolve('bar');
-  t.is(await bar, 'bar');
+  t.is(component.querySelector('span').innerText, 'bar');
 });
