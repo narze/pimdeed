@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "eleventy --serve & postcss styles/tailwind.css --o _tmp/style.css --watch",
-    "build": "ELEVENTY_PRODUCTION=true eleventy & ELEVENTY_PRODUCTION=true postcss styles/tailwind.css --o _site/style.css"
+    "build": "ELEVENTY_PRODUCTION=true eleventy & ELEVENTY_PRODUCTION=true postcss styles/tailwind.css --o _site/style.css",
+    "test": "ava"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "@11ty/eleventy": "^0.11.0",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "alpinejs": "^2.4.1",
+    "ava": "^3.10.1",
     "postcss-clean": "^1.1.0",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
