@@ -1,11 +1,16 @@
 const test = require('ava');
-const { render } = require('alpine-test-utils');
+const { render, load, setGlobal } = require('alpine-test-utils');
+const { app } = require("./app")
 
-test('test foo component', (t) => {
-  const componentHtml = `<div x-data="{foo: 'bar'}">
-    <span x-text="foo"></span>
-  </div>`
-  const component = render(componentHtml);
+test('click start button to start typing', async (t) => {
+  const markup = await load("./index.html")
+  setGlobal({ app });
+  const component = render(markup);
 
-  t.is(component.querySelector('span').innerText, 'bar');
+  t.is(component.$data.started, false)
+
+  component.$data.$refs.startButton.click()
+  component.$data.type()
+
+  t.is(component.$data.started, true)
 });

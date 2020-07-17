@@ -8,7 +8,7 @@
   <script src="/js/alpine.js"></script>
 </head>
 <body>
-  <div id="app" x-init="$refs.startButton.focus()" x-data="app()" class="fixed inset-0 flex justify-center items-center">
+  <div id="app" x-init="focusStartButton()" x-data="app()" class="fixed inset-0 flex justify-center items-center">
     <div>
       <h1 class="text-3xl text-center">Pimdeed</h1>
       <p class="text-center text-gray-600">Typing Practice</p>
@@ -47,6 +47,7 @@
         startTime: null,
         finishTime: null,
         interval: null,
+        elapsedTime: null,
         start() {
           this.input = ""
           this.$refs.typingInput.focus()
@@ -77,6 +78,9 @@
         },
         startButtonText() {
           return this.isFinished() ? 'Restart' : 'Start'
+        },
+        focusStartButton() {
+          this.$refs.startButton.focus()
         },
       }
     }
