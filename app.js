@@ -1,4 +1,4 @@
-module.exports.app = function() {
+export function data() {
   return {
     template: 'the quick brown fox jumps over the lazy dog',
     input: null,

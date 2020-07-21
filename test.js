@@ -1,10 +1,13 @@
+import "regenerator-runtime/runtime";
+import "core-js/stable";
+
 const test = require('ava');
 const { render, load, setGlobal } = require('alpine-test-utils');
-const { app } = require("./app")
+const { data } = require("./app")
 
 test('click start button to start typing', async (t) => {
   const markup = await load("./index.html")
-  setGlobal({ app });
+  setGlobal({ app: { data } });
   const component = render(markup);
 
   t.is(component.$data.started, false)

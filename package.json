@@ -4,20 +4,54 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "eleventy --serve & postcss styles/tailwind.css --o _tmp/style.css --watch",
-    "build": "ELEVENTY_PRODUCTION=true eleventy & ELEVENTY_PRODUCTION=true postcss styles/tailwind.css --o _site/style.css",
-    "test": "ava"
+    "dev": "npm-run-all clean --parallel dev:*",
+    "build": "run-s clean build:*",
+    "dev:webpack": "webpack --mode development --watch",
+    "dev:eleventy": "ELEVENTY_ENV=development eleventy --serve",
+    "dev:postcss": "postcss styles/tailwind.css --o _tmp/style.css --watch",
+    "build:webpack": "webpack --mode production",
+    "build:eleventy": "ELEVENTY_ENV=production eleventy",
+    "build:postcss": "ELEVENTY_PRODUCTION=true postcss styles/tailwind.css --o _site/style.css",
+    "test": "ava",
+    "clean": "rimraf _site"
+  },
+  "ava": {
+    "babel": {
+      "compileAsTests": [
+        "**/*"
+      ],
+      "testOptions": {
+        "presets": [
+          ["@babel/preset-env",
+          {
+            "useBuiltIns": "usage",
+            "corejs": 3,
+            "targets": "> 0.25%, not dead"
+          }]
+        ]
+      }
+    }
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
+    "@ava/babel": "^1.0.1",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-stage-3": "^7.8.3",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "alpine-test-utils": "0.0.6",
     "alpinejs": "^2.4.1",
     "ava": "^3.10.1",
+    "core-js": "^3.6.5",
+    "exports-loader": "^1.1.0",
+    "npm-run-all": "^4.1.5",
     "postcss-clean": "^1.1.0",
     "postcss-cli": "^7.1.1",
-    "tailwindcss": "^1.4.6"
+    "regenerator-runtime": "^0.13.5",
+    "rimraf": "^3.0.2",
+    "tailwindcss": "^1.4.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   }
 }

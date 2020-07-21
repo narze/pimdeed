@@ -8,7 +8,7 @@
   <script src="/js/alpine.js"></script>
 </head>
 <body>
-  <div id="app" x-init="focusStartButton()" x-data="app()" class="fixed inset-0 flex justify-center items-center">
+  <div id="app" x-init="focusStartButton()" x-data="app.data()" class="fixed inset-0 flex justify-center items-center">
     <div>
       <h1 class="text-3xl text-center">Pimdeed</h1>
       <p class="text-center text-gray-600">Typing Practice</p>
@@ -16,7 +16,7 @@
       <input x-ref="typingInput" x-model="input" x-bind:disabled="isFinished()" class="w-full my-2 mb-4 py-2 px-2 shadow appearance-none border border-gray-400 rounded border-white rounded focus:outline-none focus:shadow-outline" x-on:keydown="type($event)" type="text" name="typing-input" id="typing-input" placeholder="Type here">
       <div class="text-center">
         <template x-if="!started"><p>Press <code>Enter</code> and start typing!</p></template>
-        <button x-text="startButtonText()" x-ref="startButton" @click="start()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button x-text="startButtonText()" x-ref="startButton" @click="start()" class="button">
         </button>
       </div>
       <template x-if="isFinished()">
@@ -38,52 +38,6 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    function app() {
-      return {
-        template: 'the quick brown fox jumps over the lazy dog',
-        input: null,
-        started: false,
-        startTime: null,
-        finishTime: null,
-        interval: null,
-        elapsedTime: null,
-        start() {
-          this.input = ""
-          this.$refs.typingInput.focus()
-
-          clearInterval(this.interval)
-          const self = this
-          this.interval = setInterval(() => {
-            self.elapsedTime = self.typingTime()
-          }, 10);
-        },
-        isFinished() {
-          const finished = this.template == this.input
-          if (finished) {
-            clearInterval(this.interval)
-            this.started = false
-            this.$refs.startButton.focus()
-          }
-          return finished
-        },
-        type() {
-          if (!this.started) {
-            this.started = true
-            this.startTime = Date.now()
-          }
-        },
-        typingTime() {
-          return `${(Date.now() - this.startTime) / 1000}s`
-        },
-        startButtonText() {
-          return this.isFinished() ? 'Restart' : 'Start'
-        },
-        focusStartButton() {
-          this.$refs.startButton.focus()
-        },
-      }
-    }
-  </script>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
